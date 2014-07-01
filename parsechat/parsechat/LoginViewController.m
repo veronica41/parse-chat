@@ -63,14 +63,14 @@
     [PFUser logInWithUsernameInBackground:self.userNameField.text password:self.passwordField.text
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
-                                            [self showLoginView];
+                                            [self showChatView];
                                         } else {
                                             // The login failed. Check error to see why.
                                         }
                                     }];
 }
 
-- (void)showLoginView {
+- (void)showChatView {
     NSLog(@"Login");
     
 }
