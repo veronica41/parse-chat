@@ -8,12 +8,15 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
+#import "RoomViewController.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userNameField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;
 - (IBAction)onSignup:(id)sender;
 - (IBAction)onLogin:(id)sender;
+
+@property (nonatomic, strong) PFUser *user;
 @end
 
 @implementation LoginViewController
@@ -40,15 +43,15 @@
 }
 
 - (IBAction)onSignup:(id)sender {
-    PFUser *user = [PFUser user];
-    user.username = self.userNameField.text;
-    user.password = self.passwordField.text;
+    self.user = [PFUser user];
+    self.user.username = self.userNameField.text;
+    self.user.password = self.passwordField.text;
     //user.email = @"email@example.com";
     
     // other fields can be set just like with PFObject
     //user[@"phone"] = @"415-392-0202";
     
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [self.user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             [self onLogin:sender];
         } else {
@@ -63,6 +66,7 @@
     [PFUser logInWithUsernameInBackground:self.userNameField.text password:self.passwordField.text
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
+                                            self.user = user;
                                             [self showChatView];
                                         } else {
                                             // The login failed. Check error to see why.
@@ -72,6 +76,9 @@
 
 - (void)showChatView {
     NSLog(@"Login");
+    RoomViewController *controller = [[RoomViewController alloc] init];
+    controller.user = self.user;
+    [self presentViewController:controller animated:NO completion:nil];
     
 }
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "RoomViewController.h"
+#import <Parse/Parse.h>
 
 @interface RoomViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -39,5 +40,9 @@
 }
 
 - (IBAction)onSend:(id)sender {
+    PFObject *gameScore = [PFObject objectWithClassName:@"Message"];
+    gameScore[@"text"] = self.textField.text;
+    gameScore[@"user"] = self.user;
+    [gameScore saveInBackground];
 }
 @end
