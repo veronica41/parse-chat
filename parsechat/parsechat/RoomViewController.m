@@ -9,6 +9,9 @@
 #import "RoomViewController.h"
 
 @interface RoomViewController ()
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+- (IBAction)onSend:(id)sender;
 
 @end
 
@@ -35,4 +38,6 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)onSend:(id)sender {
+}
 @end
